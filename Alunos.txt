@@ -1,0 +1,25 @@
+bPortuguês:
+7.0 
+Matemática:
+8.0 
+Histórias:
+8.0 
+Ciência:
+8.0 
+Física:
+8.0 
+Iuri:
+Português: 0.0
+Matemática: 9.9
+Física: 9.9
+jjj: 9
+Joao:
+Português: 9.0
+Matemática: 0.0
+Física: 0.0
+Eletiva: 0.0
+Jj: 0.0
+Kk: 0.0
+Mm: 0.0
+Ll: 0.0
+Pp: 0.0
