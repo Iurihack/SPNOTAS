@@ -1,44 +1,105 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login e Registro</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 500px;
+            margin: auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        form {
+            margin: 20px 0;
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+        input {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #333;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #555;
+        }
+        .image-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Registro</h1>
-    <form id="registerForm">
-        <label for="username">Usuário:</label>
-        <input type="text" id="username" name="username" required><br>
-        <label for="password">Senha:</label>
-        <input type="number" id="password" name="password" required><br>
+    <div class="container">
+        <h1>Bem-vindo</h1>
+        <div class="image-container">
+            <img src="/static/welcome_image.png" alt="Bem-vindo">
+        </div>
+        <h2>Registro</h2>
+        <form id="registerForm">
+            <label for="username">Usuário:</label>
+            <input type="text" id="username" name="username" required><br>
+            <label for="password">Senha:</label>
+            <input type="number" id="password" name="password" required><br>
+            <h3>Notas:</h3>
+            <label for="mt">Matemática:</label>
+            <input type="number" id="mt" name="mt" required><br>
+            <label for="pt">Português:</label>
+            <input type="number" id="pt" name="pt" required><br>
+            <label for="fs">Física:</label>
+            <input type="number" id="fs" name="fs" required><br>
+            <label for="unit1">Unidade 1:</label>
+            <input type="number" id="unit1" name="unit1" required><br>
+            <label for="unit2">Unidade 2:</label>
+            <input type="number" id="unit2" name="unit2" required><br>
+            <label for="unit3">Unidade 3:</label>
+            <input type="number" id="unit3" name="unit3" required><br>
+            <button type="submit">Registrar</button>
+        </form>
+
+        <h2>Login</h2>
+        <form id="loginForm">
+            <label for="loginUsername">Usuário:</label>
+            <input type="text" id="loginUsername" name="username" required><br>
+            <label for="loginPassword">Senha:</label>
+            <input type="number" id="loginPassword" name="password" required><br>
+            <button type="submit">Login</button>
+        </form>
+
         <h2>Notas:</h2>
-        <label for="mt">Matemática:</label>
-        <input type="number" id="mt" name="mt" required><br>
-        <label for="pt">Português:</label>
-        <input type="number" id="pt" name="pt" required><br>
-        <label for="fs">Física:</label>
-        <input type="number" id="fs" name="fs" required><br>
-        <label for="unit1">Unidade 1:</label>
-        <input type="number" id="unit1" name="unit1" required><br>
-        <label for="unit2">Unidade 2:</label>
-        <input type="number" id="unit2" name="unit2" required><br>
-        <label for="unit3">Unidade 3:</label>
-        <input type="number" id="unit3" name="unit3" required><br>
-        <button type="submit">Registrar</button>
-    </form>
-
-    <h1>Login</h1>
-    <form id="loginForm">
-        <label for="loginUsername">Usuário:</label>
-        <input type="text" id="loginUsername" name="username" required><br>
-        <label for="loginPassword">Senha:</label>
-        <input type="number" id="loginPassword" name="password" required><br>
-        <button type="submit">Login</button>
-    </form>
-
-    <h2>Notas:</h2>
-    <div id="notas"></div>
+        <div id="notas"></div>
+    </div>
 
     <script>
         document.getElementById('registerForm').addEventListener('submit', function(event) {
