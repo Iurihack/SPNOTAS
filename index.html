@@ -1,11 +1,84 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Olá Mundo</title>
+    <title>Login e Registro</title>
 </head>
 <body>
-    <h1>Olá mundo</h1>
+    <h1>Registro</h1>
+    <form id="registerForm">
+        <label for="username">Usuário:</label>
+        <input type="text" id="username" name="username" required><br>
+        <label for="password">Senha:</label>
+        <input type="number" id="password" name="password" required><br>
+        <h2>Notas:</h2>
+        <label for="mt">Matemática:</label>
+        <input type="number" id="mt" name="mt" required><br>
+        <label for="pt">Português:</label>
+        <input type="number" id="pt" name="pt" required><br>
+        <label for="fs">Física:</label>
+        <input type="number" id="fs" name="fs" required><br>
+        <label for="unit1">Unidade 1:</label>
+        <input type="number" id="unit1" name="unit1" required><br>
+        <label for="unit2">Unidade 2:</label>
+        <input type="number" id="unit2" name="unit2" required><br>
+        <label for="unit3">Unidade 3:</label>
+        <input type="number" id="unit3" name="unit3" required><br>
+        <button type="submit">Registrar</button>
+    </form>
+
+    <h1>Login</h1>
+    <form id="loginForm">
+        <label for="loginUsername">Usuário:</label>
+        <input type="text" id="loginUsername" name="username" required><br>
+        <label for="loginPassword">Senha:</label>
+        <input type="number" id="loginPassword" name="password" required><br>
+        <button type="submit">Login</button>
+    </form>
+
+    <h2>Notas:</h2>
+    <div id="notas"></div>
+
+    <script>
+        document.getElementById('registerForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            fetch('/register', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    alert(data.message);
+                } else {
+                    alert(data.message);
+                }
+            });
+        });
+
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            fetch('/login', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    const notasDiv = document.getElementById('notas');
+                    notasDiv.innerHTML = `
+                        <p>Matemática - Unidade 1: ${data.notas.mt.unit1}, Unidade 2: ${data.notas.mt.unit2}, Unidade 3: ${data.notas.mt.unit3}</p>
+                        <p>Português - Unidade 1: ${data.notas.pt.unit1}, Unidade 2: ${data.notas.pt.unit2}, Unidade 3: ${data.notas.pt.unit3}</p>
+                        <p>Física - Unidade 1: ${data.notas.fs.unit1}, Unidade 2: ${data.notas.fs.unit2}, Unidade 3: ${data.notas.fs.unit3}</p>
+                    `;
+                } else {
+                    alert(data.message);
+                }
+            });
+        });
+    </script>
 </body>
 </html>
