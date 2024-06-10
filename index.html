@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake Game</title>
+    <style>
+        body {
+            background-color: #6495ED; /* azul claro */
+        }
+        canvas {
+            display: block;
+            margin: auto;
+            background-color: #FFFFFF; /* branco */
+        }
+    </style>
+</head>
+<body>
+    <canvas id="gameCanvas" width="800" height="600"></canvas>
+
+    <script>
+        var canvas = document.getElementById("gameCanvas");
+        var ctx = canvas.getContext("2d");
+
+        var snakeSize = 10;
+        var dis_width = canvas.width;
+        var dis_height = canvas.height;
+
+        var snake = [];
+        snake[0] = {x: dis_width / 2, y: dis_height / 2};
+
+        var food = {
+            x: Math.floor(Math.random() * (dis_width / snakeSize)) * snakeSize,
+            y: Math.floor(Math.random() * (dis_height / snakeSize)) * snakeSize
+        };
+
+        var x1_change = 0;
+        var y1_change = 0;
+
+        function drawSnake() {
+            for (var i = 0; i < snake.length; i++) {
+                ctx.fillStyle = (i === 0) ? "black" : "green";
+                ctx.fillRect(snake[i].x, snake[i].y, snakeSize, snakeSize);
+            }
+        }
+
+        function drawFood() {
+            ctx.fillStyle = "red";
+            ctx.fillRect(food.x, food.y, snakeSize, snakeSize);
+        }
+
+        function checkCollision(x, y, array) {
+            for (var i = 0; i < array.length; i++) {
+                if (x === array[i].x && y === array[i].y) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        function gameLoop() {
+            ctx.clearRect(0, 0, dis_width, dis_height);
+
+            snake[0].x += x1_change;
+            snake[0].y += y1_change;
+
+            if (snake[0].x >= dis_width || snake[0].x < 0 || snake[0].y >= dis_height || snake[0].y < 0 || checkCollision(snake[0].x, snake[0].y, snake)) {
+                clearInterval(game);
+            }
+
+            if (snake[0].x === food.x && snake[0].y === food.y) {
+                food.x = Math.floor(Math.random() * (dis_width / snakeSize)) * snakeSize;
+                food.y = Math.floor(Math.random() * (dis_height / snakeSize)) * snakeSize;
+            } else {
+                snake.pop();
+            }
+
+            var newHead = {
+                x: snake[0].x + x1_change,
+                y: snake[0].y + y1_change
+            };
+
+            snake.unshift(newHead);
+
+            drawSnake();
+            drawFood();
+        }
+
+        document.addEventListener("keydown", function(event) {
+            if (event.keyCode === 37) { // left arrow
+                x1_change = -snakeSize;
+                y1_change = 0;
+            } else if (event.keyCode === 38) { // up arrow
+                x1_change = 0;
+                y1_change = -snakeSize;
+            } else if (event.keyCode === 39) { // right arrow
+                x1_change = snakeSize;
+                y1_change = 0;
+            } else if (event.keyCode === 40) { // down arrow
+                x1_change = 0;
+                y1_change = snakeSize;
+            }
+        });
+
+        var game = setInterval(gameLoop, 100);
+    </script>
+</body>
+</html>
