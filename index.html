@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tela de Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="login-container" id="login-container">
+        <h1>Login</h1>
+        <form id="login-form">
+            <label for="username">Usuário:</label>
+            <input type="text" id="username" name="username" required>
+            <label for="password">Senha:</label>
+            <input type="password" id="password" name="password" required>
+            <button type="submit">Entrar</button>
+        </form>
+        <div id="login-error" style="color: red; display: none;">Usuário ou senha inválidos.</div>
+    </div>
+    <div class="grades-container" id="grades-container" style="display: none;">
+        <h1>Notas</h1>
+        <div id="grades"></div>
+        <button onclick="logout()">Sair</button>
+    </div>
+
+    <script>
+        const users = {
+            iuri: {
+                password: 'iuri22',
+                grades: {
+                    '1ª unidade': {
+                        'Matemática': 3,
+                        'Português': 3,
+                        'Ciência': 3
+                    },
+                    '2ª unidade': {
+                        'Matemática': 3,
+                        'Português': 3,
+                        'Ciência': 3
+                    }
+                }
+            },
+            ruan: {
+                password: 'ruan22',
+                grades: {
+                    '1ª unidade': {
+                        'Matemática': 10,
+                        'Português': 10,
+                        'Ciência': 10
+                    },
+                    '2ª unidade': {
+                        'Sem Informações': 'N/A'
+                    }
+                }
+            }
+        };
+
+        document.getElementById('login-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            if (users[username] && users[username].password === password) {
+                showGrades(username);
+            } else {
+                document.getElementById('login-error').style.display = 'block';
+            }
+        });
+
+        function showGrades(username) {
+            document.getElementById('login-container').style.display = 'none';
+            document.getElementById('grades-container').style.display = 'block';
+            
+            const grades = users[username].grades;
+            let gradesHtml = '';
+
+            for (const unit in grades) {
+                gradesHtml += `<h2>${unit}</h2>`;
+                for (const subject in grades[unit]) {
+                    gradesHtml += `<p>${subject}: ${grades[unit][subject]}</p>`;
+                }
+            }
+
+            document.getElementById('grades').innerHTML = gradesHtml;
+        }
+
+        function logout() {
+            document.getElementById('login-container').style.display = 'block';
+            document.getElementById('grades-container').style.display = 'none';
+            document.getElementById('login-error').style.display = 'none';
+            document.getElementById('login-form').reset();
+        }
+    </script>
+</body>
+</html>
