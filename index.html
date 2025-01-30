@@ -39,7 +39,7 @@
         .nota {
             padding: 5px;
         }
-        .turma-content {
+        .notas {
             display: none;
             margin-top: 10px;
         }
@@ -86,10 +86,6 @@
                 nomeTurma.textContent = turma.nome;
                 turmaDiv.appendChild(nomeTurma);
 
-                // Div para as informações da turma que estará inicialmente oculta
-                const turmaContentDiv = document.createElement('div');
-                turmaContentDiv.classList.add('turma-content');
-
                 turma.alunos.forEach(aluno => {
                     const alunoDiv = document.createElement('div');
                     alunoDiv.classList.add('aluno');
@@ -98,6 +94,7 @@
                     nomeAluno.textContent = `Aluno: ${aluno.nome}`;
                     alunoDiv.appendChild(nomeAluno);
 
+                    // Div para as notas do aluno, inicialmente oculto
                     const notasDiv = document.createElement('div');
                     notasDiv.classList.add('notas');
                     Object.keys(aluno.notas).forEach(subject => {
@@ -108,21 +105,19 @@
                     });
 
                     alunoDiv.appendChild(notasDiv);
-                    turmaContentDiv.appendChild(alunoDiv);
+                    turmaDiv.appendChild(alunoDiv);
+
+                    // Tornar a div de notas visível ao clicar no nome do aluno
+                    nomeAluno.classList.add('show-notas');
+                    nomeAluno.onclick = () => {
+                        const notas = alunoDiv.querySelector('.notas');
+                        notas.style.display = notas.style.display === 'none' ? 'block' : 'none';
+                        nomeAluno.textContent = notas.style.display === 'none' 
+                            ? `Aluno: ${aluno.nome}` 
+                            : `Ocultar Notas de ${aluno.nome}`;
+                    };
                 });
 
-                turmaDiv.appendChild(turmaContentDiv);
-
-                // Botão para mostrar as notas da turma
-                const showNotasBtn = document.createElement('p');
-                showNotasBtn.classList.add('show-notas');
-                showNotasBtn.textContent = 'Ver Notas';
-                showNotasBtn.onclick = () => {
-                    turmaContentDiv.style.display = turmaContentDiv.style.display === 'none' ? 'block' : 'none';
-                    showNotasBtn.textContent = turmaContentDiv.style.display === 'none' ? 'Ver Notas' : 'Ocultar Notas';
-                };
-
-                turmaDiv.appendChild(showNotasBtn);
                 container.appendChild(turmaDiv);
             });
         }
