@@ -1,18 +1,4 @@
 [
-    {
-        "username": "aluno1",
-        "password": "senha123",
-        "notas": {
-            "matematica": 7.5,
-            "portugues": 8.0
-        }
-    },
-    {
-        "username": "aluno2",
-        "password": "senha456",
-        "notas": {
-            "matematica": 6.0,
-            "portugues": 9.0
-        }
-    }
+  { "username": "admin", "password": "1234" },
+  { "username": "user1", "password": "password1" }
 ]
