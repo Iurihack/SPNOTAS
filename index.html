@@ -8,13 +8,20 @@
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
+            /* Usando uma URL de imagem externa */
+            background-image: url('https://example.com/imagem.jpg'); /* Substitua por sua URL de imagem */
+            /* Ou usando uma imagem local */
+            /* background-image: url('imagens/imagem.jpg'); */
+            background-size: cover;
+            background-position: center;
             display: flex;
             flex-direction: column;
             align-items: center;
             padding: 20px;
+            min-height: 100vh;
         }
         .turma {
-            background-color: #fff;
+            background-color: rgba(255, 255, 255, 0.8); /* Transparência para o fundo */
             border-radius: 8px;
             width: 80%;
             margin: 10px;
