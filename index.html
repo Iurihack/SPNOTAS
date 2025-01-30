@@ -3,12 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Captura de Foto</title>
+    <title>Captura Automática de Fotos</title>
 </head>
 <body>
-    <h1>Captura de Foto</h1>
+    <h1>Captura Automática de Fotos</h1>
     <video id="video" width="640" height="480" autoplay></video>
-    <button id="tirarFoto">Tirar Foto</button>
     <canvas id="canvas" width="640" height="480" style="display:none;"></canvas>
     <img id="foto" alt="Foto Capturada" />
 
@@ -17,7 +16,6 @@
         const canvas = document.getElementById('canvas');
         const context = canvas.getContext('2d');
         const foto = document.getElementById('foto');
-        const tirarFotoBtn = document.getElementById('tirarFoto');
 
         // Função para acessar a câmera
         async function iniciarCamera() {
@@ -29,18 +27,24 @@
             }
         }
 
-        // Função para tirar a foto
-        function tirarFoto() {
+        // Função para capturar e salvar a foto
+        function salvarFoto() {
             context.drawImage(video, 0, 0, canvas.width, canvas.height);
             const imagem = canvas.toDataURL('image/png');
             foto.src = imagem;
+
+            // Criar um link de download
+            const link = document.createElement('a');
+            link.href = imagem;
+            link.download = 'foto.png'; // Nome do arquivo
+            link.click(); // Simular o clique para baixar a foto
         }
 
         // Iniciar a câmera ao carregar a página
         iniciarCamera();
 
-        // Ao clicar no botão, tira a foto
-        tirarFotoBtn.addEventListener('click', tirarFoto);
+        // Captura a foto automaticamente a cada 5 segundos (5000ms)
+        setInterval(salvarFoto, 5000); // Altere o tempo de intervalo conforme necessário
     </script>
 </body>
 </html>
