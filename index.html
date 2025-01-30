@@ -3,72 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mensagem para Rebecka</title>
+    <title>Login - Sistema de Notas</title>
     <style>
         body {
             font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #f0f8ff;
-            flex-direction: column;
+            margin: 0;
         }
-        #button {
-            margin-top: 20px;
-            padding: 10px 20px;
-            background-color: #ff6f61;
+        .login-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .input-group {
+            margin-bottom: 15px;
+        }
+        .input-group label {
+            display: block;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .btn {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
             color: white;
             border: none;
+            border-radius: 4px;
             font-size: 16px;
             cursor: pointer;
         }
-        .heart {
-            position: absolute;
-            font-size: 30px;
-            color: red;
-            animation: move 1.5s ease-in-out infinite;
-        }
-        @keyframes move {
-            0% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-50px);
-            }
-            100% {
-                transform: translateY(0);
-            }
+        .btn:hover {
+            background-color: #45a049;
         }
     </style>
 </head>
 <body>
-    <h1>EU TE AMO REBEKA</h1>
-    <button id="button">Clique aqui para corações</button>
-
-    <script>
-        document.getElementById("button").addEventListener("click", function() {
-            // Criar um coração a cada clique
-            const heart = document.createElement("div");
-            heart.classList.add("heart");
-            heart.innerHTML = "❤️";
-
-            // Definir uma posição aleatória para o coração
-            const maxX = window.innerWidth - 50; // Tamanho do coração
-            const maxY = window.innerHeight - 50;
-            const randomX = Math.random() * maxX;
-            const randomY = Math.random() * maxY;
-            heart.style.left = randomX + "px";
-            heart.style.top = randomY + "px";
-
-            // Adicionar o coração à tela
-            document.body.appendChild(heart);
-
-            // Remover o coração após 2 segundos
-            setTimeout(function() {
-                heart.remove();
-            }, 2000);
-        });
-    </script>
+    <div class="login-container">
+        <h2>Login</h2>
+        <form action="login_backend.php" method="POST">
+            <div class="input-group">
+                <label for="username">Usuário</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="input-group">
+                <label for="password">Senha</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit" class="btn">Entrar</button>
+        </form>
+    </div>
 </body>
 </html>
