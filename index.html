@@ -1,143 +1,46 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Notas dos Alunos</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            /* Definindo a imagem de fundo com o arquivo IMG-20250129-WA0002.jpg */
-            background-image: url('IMG-20250129-WA0002.jpg');
-            background-size: cover;  /* A imagem vai cobrir toda a tela */
-            background-position: center; /* A imagem será centralizada */
-            background-repeat: no-repeat; /* A imagem não será repetida */
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
-            min-height: 100vh;
-        }
-
-        .turma {
-            background-color: rgba(255, 255, 255, 0.8); /* Transparência para o fundo */
-            border-radius: 8px;
-            width: 80%;
-            margin: 10px;
-            padding: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        h2 {
-            text-align: center;
-            color: #333;
-        }
-
-        .aluno {
-            padding: 10px;
-            border-bottom: 1px solid #ccc;
-        }
-
-        .aluno:last-child {
-            border-bottom: none;
-        }
-
-        .notas {
-            padding: 5px;
-            margin-top: 10px;
-        }
-
-        .nota {
-            padding: 5px;
-        }
-
-        .notas {
-            display: none;
-            margin-top: 10px;
-        }
-
-        .show-notas {
-            cursor: pointer;
-            color: #007BFF;
-            text-decoration: underline;
-        }
-    </style>
+    <title>Captura de Foto</title>
 </head>
 <body>
-    <h2>Notas dos Alunos por Turma</h2>
-
-    <div id="turmas-container"></div>
+    <h1>Captura de Foto</h1>
+    <video id="video" width="640" height="480" autoplay></video>
+    <button id="tirarFoto">Tirar Foto</button>
+    <canvas id="canvas" width="640" height="480" style="display:none;"></canvas>
+    <img id="foto" alt="Foto Capturada" />
 
     <script>
-        // Dados fictícios de turmas, alunos e notas
-        const turmas = [
-            {
-                nome: "Turma A",
-                alunos: [
-                    { nome: "João", notas: { matematica: 7.0, portugues: 8.5, ciencias: 9.0 } },
-                    { nome: "Maria", notas: { matematica: 9.0, portugues: 7.5, ciencias: 8.5 } },
-                ]
-            },
-            {
-                nome: "Turma B",
-                alunos: [
-                    { nome: "Pedro", notas: { matematica: 6.0, portugues: 7.0, ciencias: 8.0 } },
-                    { nome: "Ana", notas: { matematica: 8.0, portugues: 9.5, ciencias: 7.5 } },
-                ]
+        const video = document.getElementById('video');
+        const canvas = document.getElementById('canvas');
+        const context = canvas.getContext('2d');
+        const foto = document.getElementById('foto');
+        const tirarFotoBtn = document.getElementById('tirarFoto');
+
+        // Função para acessar a câmera
+        async function iniciarCamera() {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                video.srcObject = stream;
+            } catch (err) {
+                alert('Erro ao acessar a câmera: ' + err);
             }
-        ];
-
-        // Função para renderizar os dados
-        function exibirTurmas() {
-            const container = document.getElementById('turmas-container');
-            
-            turmas.forEach(turma => {
-                const turmaDiv = document.createElement('div');
-                turmaDiv.classList.add('turma');
-                
-                const nomeTurma = document.createElement('h3');
-                nomeTurma.textContent = turma.nome;
-                turmaDiv.appendChild(nomeTurma);
-
-                turma.alunos.forEach(aluno => {
-                    const alunoDiv = document.createElement('div');
-                    alunoDiv.classList.add('aluno');
-                    
-                    const nomeAluno = document.createElement('p');
-                    nomeAluno.textContent = `Aluno: ${aluno.nome}`;
-                    alunoDiv.appendChild(nomeAluno);
-
-                    // Div para as notas do aluno, inicialmente oculto
-                    const notasDiv = document.createElement('div');
-                    notasDiv.classList.add('notas');
-                    Object.keys(aluno.notas).forEach(subject => {
-                        const nota = document.createElement('div');
-                        nota.classList.add('nota');
-                        nota.textContent = `${subject.charAt(0).toUpperCase() + subject.slice(1)}: ${aluno.notas[subject]}`;
-                        notasDiv.appendChild(nota);
-                    });
-
-                    alunoDiv.appendChild(notasDiv);
-                    turmaDiv.appendChild(alunoDiv);
-
-                    // Tornar a div de notas visível ao clicar no nome do aluno
-                    nomeAluno.classList.add('show-notas');
-                    nomeAluno.onclick = () => {
-                        const notas = alunoDiv.querySelector('.notas');
-                        notas.style.display = notas.style.display === 'none' ? 'block' : 'none';
-                        nomeAluno.textContent = notas.style.display === 'none' 
-                            ? `Aluno: ${aluno.nome}` 
-                            : `Ocultar Notas de ${aluno.nome}`;
-                    };
-                });
-
-                container.appendChild(turmaDiv);
-            });
         }
 
-        // Chama a função para exibir as turmas e alunos
-        exibirTurmas();
+        // Função para tirar a foto
+        function tirarFoto() {
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            const imagem = canvas.toDataURL('image/png');
+            foto.src = imagem;
+        }
+
+        // Iniciar a câmera ao carregar a página
+        iniciarCamera();
+
+        // Ao clicar no botão, tira a foto
+        tirarFotoBtn.addEventListener('click', tirarFoto);
     </script>
 </body>
 </html>
