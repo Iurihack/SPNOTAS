@@ -1,23 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BURGUER BRASIL BB 🍖 - Login</title>
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-  <div class="container">
-    <h1>BURGUER BRASIL BB 🍖</h1>
-    <form id="loginForm">
-      <label for="username">Usuário:</label>
-      <input type="text" id="username" name="username" required>
-      <label for="password">Senha:</label>
-      <input type="password" id="password" name="password" required>
-      <button type="submit">Entrar</button>
-    </form>
-    <p id="error" class="error-message"></p>
-  </div>
-  <script src="script.js"></script>
-</body>
-</html>
+document.getElementById('loginForm').addEventListener('submit', function(event) {
+  event.preventDefault();
+
+  const username = document.getElementById('username').value;
+  const password = document.getElementById('password').value;
+
+  if (username === 'iuri' && password === 'admin') {
+    // Redireciona para a página de pedidos
+    window.location.href = './pedidos.html';
+  } else {
+    document.getElementById('error').textContent = 'Usuário ou senha incorretos!';
+  }
+});
+
+document.getElementById('orderForm').addEventListener('submit', function(event) {
+  event.preventDefault();
+
+  const pedido = document.getElementById('pedido').value;
+  const valor = document.getElementById('valor').value;
+  const observacao = document.getElementById('observacao').value;
+  const endereco = document.getElementById('endereco').value;
+
+  // Mensagem formatada que será enviada via WhatsApp
+  const mensagem = `*Novo Pedido* 🍔\nPedido: ${pedido}\nValor: R$${valor}\nObservação: ${observacao}\nEndereço: ${endereco}`;
+  
+  // Número de WhatsApp
+  const numeroWhatsApp = "5577991399209"; // Número de WhatsApp
+
+  // Redireciona para o WhatsApp com a mensagem
+  window.open(`https://api.whatsapp.com/send?phone=${numeroWhatsApp}&text=${encodeURIComponent(mensagem)}`, '_blank');
+});
