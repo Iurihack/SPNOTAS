@@ -1,31 +1,103 @@
-document.getElementById('loginForm').addEventListener('submit', function(event) {
-  event.preventDefault();
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Enviar Mensagem para WhatsApp</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
 
-  const username = document.getElementById('username').value;
-  const password = document.getElementById('password').value;
+    .container {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      width: 300px;
+    }
 
-  if (username === 'iuri' && password === 'admin') {
-    // Redireciona para a página de pedidos
-    window.location.href = './pedidos.html';
-  } else {
-    document.getElementById('error').textContent = 'Usuário ou senha incorretos!';
-  }
-});
+    h2 {
+      text-align: center;
+      color: #333;
+    }
 
-document.getElementById('orderForm').addEventListener('submit', function(event) {
-  event.preventDefault();
+    .input-group {
+      margin-bottom: 15px;
+    }
 
-  const pedido = document.getElementById('pedido').value;
-  const valor = document.getElementById('valor').value;
-  const observacao = document.getElementById('observacao').value;
-  const endereco = document.getElementById('endereco').value;
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
 
-  // Mensagem formatada que será enviada via WhatsApp
-  const mensagem = `*Novo Pedido* 🍔\nPedido: ${pedido}\nValor: R$${valor}\nObservação: ${observacao}\nEndereço: ${endereco}`;
-  
-  // Número de WhatsApp
-  const numeroWhatsApp = "5577991399209"; // Número de WhatsApp
+    input, textarea {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
 
-  // Redireciona para o WhatsApp com a mensagem
-  window.open(`https://api.whatsapp.com/send?phone=${numeroWhatsApp}&text=${encodeURIComponent(mensagem)}`, '_blank');
-});
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #25D366; /* Cor do WhatsApp */
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #128C7E;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Enviar Mensagem para WhatsApp</h2>
+    <form id="whatsappForm">
+      <div class="input-group">
+        <label for="phoneNumber">Número do WhatsApp (com DDI e DDD):</label>
+        <input type="text" id="phoneNumber" placeholder="Ex: +5577981234567" required>
+      </div>
+      <div class="input-group">
+        <label for="message">Mensagem:</label>
+        <textarea id="message" placeholder="Digite sua mensagem aqui..." required></textarea>
+      </div>
+      <button type="submit">Enviar para WhatsApp</button>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById('whatsappForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const phoneNumber = document.getElementById('phoneNumber').value;
+      const message = document.getElementById('message').value;
+
+      // Verifica se o número de telefone e a mensagem estão preenchidos corretamente
+      if (phoneNumber && message) {
+        // Cria a URL do WhatsApp com o número e a mensagem
+        const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+
+        // Abre o link do WhatsApp em uma nova janela
+        window.open(url, '_blank');
+      } else {
+        alert("Por favor, preencha todos os campos.");
+      }
+    });
+  </script>
+
+</body>
+</html>
